@@ -1,0 +1,84 @@
+* {
+    box-sizing: border-box;
+   }
+h2{
+
+
+  color:white;
+}
+
+body {
+  padding-bottom: 100px; /* Ajusta el valor según sea necesario */
+}
+footer {
+  background-color: #343a40; /* Color de fondo oscuro */
+  color: #fff; /* Color del texto */
+  padding: 20px 0; /* Espaciado interno superior e inferior */
+  text-align: center; /* Alineación centrada del contenido */
+}
+.content {
+  min-height: calc(100vh - 100px); /* Ajusta el valor según sea necesario */
+  padding-bottom: 100px; /* Ajusta el valor según sea necesario */
+}
+
+.modal-dark .modal-title {
+  color: #ffffff;
+}
+
+.modal-dark .btn-primary {
+  background-color: #000000;
+  border-color: #000000;
+}
+
+.modal-dark .modal-content {
+  background-color: #333333;
+  color: #ffffff;
+  border-color: #ffffff;
+  border-width: 3px;
+
+}
+
+.btn-close {
+  background-color: #ffc107 !important; /* Cambiar el color de fondo a amarillo */
+}
+
+
+h2 {
+
+  color: #000000;
+}
+
+
+   .login-logo {
+    position: relative; /* Cambiamos la posición a relativa */
+    display: block; /* Hacemos que el logo sea un elemento en bloque */
+    margin: 0 auto; /* Centramos el logo horizontalmente */
+    width: 100px;
+    height: 100px;
+    margin-top: 1rem; /* Añadimos margen superior para separarlo del formulario */
+  }
+
+  .form-container {
+    text-align: center; /* Centra el contenido del formulario horizontalmente */
+    position: relative; /* Asegura que los elementos posicionados relativamente dentro de él se alineen correctamente */
+  }
+
+  footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+  }
+
+
+  @media (max-width: 576px) {
+    footer {
+      text-align: center;
+    }
+  }

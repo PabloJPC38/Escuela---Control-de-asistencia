@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width">
+ <title>Colegio San Miguel</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}" type="text/css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+  
+{% if band %}
+
+
+<header class="p-3 text-bg-dark">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+      </a>
+
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <img src="../static/logo 4.png" alt="Logo" width="70" height="70" class="me-2">
+        </a>
+        </ul>
+      
+
+      <div class="text-end">
+        <a href="{{ url_for('logout') }}" class="btn btn-outline-warning ms-4">Cerrar sesión</a>
+      
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<img src="../static/logo 4.png" alt="Python Logo" width="60" height="60" class="login-logo">
+
+<h2 class="fw-bold mb-2 text-uppercase text-center">
+  Hola {{precept.nombre}} {{precept.apellido}}
+</h2>
+<div class="d-flex justify-content-center align-items-center">
+  <a class="btn btn-warning ms-4" data-bs-toggle="modal" href="#informeModal" role="button" style="border:2px solid black">Informe con detalles</a>
+  <a class="btn btn-warning ms-4" data-bs-toggle="modal" href="#listadoModal" role="button" style="border:2px solid black">Listado de Asistencia</a>
+  
+  <button class="btn btn-warning ms-4" type="button" data-bs-toggle="modal" data-bs-target="#asistenciaModal" style="border:2px solid black">Registrar asistencia</button>
+</div>
+
+<!-- Modal para Informe con detalles -->
+<div class="modal fade modal-dark" id="informeModal" tabindex="-1" aria-labelledby="informeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="informeModalLabel">Informe con detalles</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url_for('buscarEstudiantes') }}" method="post">
+          <label for="cursoSelect">Seleccionar curso</label>
+          <select class="form-select form-select-lg mb-3" id="cursoSelect" name="curso">
+            {% for curso in cursos %}
+            <option value="{{curso.id}}">{{curso.id}}</option>
+            {% endfor %}
+          </select>
+          <button type="submit" class="btn btn-warning">Ingresar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Registrar asistencia -->
+<div class="modal fade modal-dark" id="asistenciaModal" tabindex="-1" aria-labelledby="asistenciaModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="asistenciaModalLabel">Registrar Asistencia</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url_for('registrarEstudiante') }}" method="post">
+          <label for="cursoSelect">Seleccionar curso</label>
+          <select class="form-select form-select-lg mb-3" id="cursoSelect" name="curso">
+            {% for curso in cursos %}
+            <option value="{{curso.id}}">{{curso.id}}</option>
+            {% endfor %}
+          </select>
+          <label for="claseSelect">Seleccionar clase</label>
+          <select class="form-select form-select-lg mb-3" id="claseSelect" name="clase">
+            <option value="1">Aula</option>
+            <option value="2">Educación Física</option>
+          </select>
+          <label for="fechaInput">Ingrese fecha</label>
+          <input type="datetime" id="fechaInput" pattern="\d{4}-\d{2}-\d{2}" name="fecha" required>
+          <button type="submit" class="btn btn-warning">Ingresar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal para Listado de Asistencia -->
+<div class="modal fade modal-dark" id="listadoModal" tabindex="-1" aria-labelledby="listadoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="listadoModalLabel">Listado de Asistencia</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url_for('listadoAsistencia') }}" method="post">
+          <label for="cursoSelect">Seleccionar curso</label>
+          <select class="form-select form-select-lg mb-3" id="cursoSelect" name="curso">
+            {% for curso in cursos %}
+            <option value="{{curso.id}}">{{curso.id}}</option>
+            {% endfor %}
+          </select>
+          <label for="claseSelect">Seleccionar clase</label>
+          <select class="form-select form-select-lg mb-3" id="claseSelect" name="clase">
+            <option value="1">Aula</option>
+            <option value="2">Educación Física</option>
+          </select>
+          <label for="fechaInput">Ingrese fecha</label>
+          <input type="datetime" id="fechaInput" pattern="\d{4}-\d{2}-\d{2}" name="fecha" required>
+          <button type="submit" class="btn btn-warning">Ingresar</button>
+        
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Obtener el campo de entrada de fecha por su ID
+  var fechaInput = document.getElementById('fechaInput');
+
+  // Escuchar el evento de entrada en el campo de fecha
+  fechaInput.addEventListener('input', function() {
+    var valor = this.value;
+    valor = valor.replace(/-/g, ''); // Eliminar guiones medios existentes
+    if (valor.length > 4) {
+      valor = valor.slice(0, 4) + '-' + valor.slice(4, 6) + '-' + valor.slice(6, 8);
+    } else if (valor.length > 6) {
+      valor = valor.slice(0, 4) + '-' + valor.slice(4, 6) + '-' + valor.slice(6);
+    } else if (valor.length > 4) {
+      valor = valor.slice(0, 4) + '-' + valor.slice(4);
+    }
+    this.value = valor;
+  });
+</script>
+
+{% if band3 %}
+
+
+  <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dark rounded">
+      <div class="modal-content modal-dark">
+        <div class="modal-header d-flex flex-column align-items-center">
+          <h5 class="modal-title" id="errorModalLabel">Error</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="alert alert-danger" role="alert">
+              {{ error }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Mostrar el modal de error cuando la página se carga
+    window.addEventListener('DOMContentLoaded', function() {
+      var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+      errorModal.show();
+    });
+  
+    // Cerrar el modal de error al hacer clic en el botón de cerrar
+    var closeButton = document.querySelector('.modal#errorModal .btn-close');
+    closeButton.addEventListener('click', function() {
+      var errorModal = bootstrap.Modal.getInstance(document.getElementById('errorModal'));
+      errorModal.hide();
+    });
+  </script>
+  
+{% endif %}
+
+
+{% else %}
+
+      
+
+<div class="container form-container d-flex flex-column align-items-center justify-content-center">
+  <form action="{{ url_for('buscarHijo') }}" method="get">
+    <img src="../static/logo 4.png" alt="Python Logo" width="60" height="60" class="login-logo">
+       
+    <h2 class="fw-bold mb-2 text-uppercase text-center">
+       Hola {{padre.nombre}} {{padre.apellido}}, busque a su hijo aquí
+     </h2> 
+     
+    <div class="mb-3 d-flex align-items-center justify-content-center">
+      <label for="exampleInputNumber" class="form-label" style="margin-right: 10px;">Ingrese DNI</label>
+      <input type="number" class="form-control" id="exampleInputNumber" aria-describedby="numberHelp" name="dni" style="width: auto; border: 2px solid black">
+    </div>
+    
+    <button type="submit" class="btn btn-warning">Ingresar</button>
+    <a href="{{ url_for('logout') }}" class="btn btn-warning ms-4">Cerrar sesión</a>
+  
+  </form>
+</div>
+
+{% if band2 %}
+
+
+
+  <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dark rounded">
+      <div class="modal-content modal-dark">
+        <div class="modal-header d-flex flex-column align-items-center">
+          <h5 class="modal-title" id="errorModalLabel">Error</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="alert alert-danger" role="alert">
+              {{ error }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Mostrar el modal de error cuando la página se carga
+    window.addEventListener('DOMContentLoaded', function() {
+      var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+      errorModal.show();
+    });
+  
+    // Cerrar el modal de error al hacer clic en el botón de cerrar
+    var closeButton = document.querySelector('.modal#errorModal .btn-close');
+    closeButton.addEventListener('click', function() {
+      var errorModal = bootstrap.Modal.getInstance(document.getElementById('errorModal'));
+      errorModal.hide();
+    });
+  </script>
+  
+{% endif %}
+
+{% endif %}
+
+
+<!-- Pie de página -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <p>&copy; 2023 Colegio San Miguel. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
