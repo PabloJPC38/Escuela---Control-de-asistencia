@@ -1,4 +1,4 @@
-# Escuela---Control-de-asistencia
+# Escuela - Control de asistencia
 Trabajo universitario de desarrollo web creado con Flask. Las intrucciones están explicadas en el archivo PracticoUnidad5.pdf del mismo repositorio 
 
 ## Usuarios logueados
